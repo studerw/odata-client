@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<entry xml:base="http://services.odata.org/northwind/Northwind.svc/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <id>http://services.odata.org/northwind/Northwind.svc/Customers('ALFKI')</id>
+  <title type="text"></title>
+  <updated>2010-11-15T07:14:39Z</updated>
+  <author>
+    <name />
+  </author>
+  <link rel="edit" title="Customer" href="Customers('ALFKI')" />
+  <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Orders" type="application/atom+xml;type=feed" title="Orders" href="Customers('ALFKI')/Orders">
+    <m:inline>
+      <feed>
+        <title type="text">Orders</title>
+        <id>http://services.odata.org/northwind/Northwind.svc/Customers('ALFKI')/Orders</id>
+        <updated>2010-11-15T07:14:39Z</updated>
+        <link rel="self" title="Orders" href="Customers('ALFKI')/Orders" />
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(10643)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(10643)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(10643)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(10643)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(10643)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(10643)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">10643</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">6</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1997-08-25T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1997-09-22T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1997-09-02T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">1</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">29.4600</d:Freight>
+              <d:ShipName>Alfreds Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(10692)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(10692)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(10692)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(10692)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(10692)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(10692)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">10692</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">4</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1997-10-03T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1997-10-31T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1997-10-13T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">2</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">61.0200</d:Freight>
+              <d:ShipName>Alfred's Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(10702)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(10702)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(10702)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(10702)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(10702)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(10702)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">10702</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">4</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1997-10-13T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1997-11-24T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1997-10-21T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">1</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">23.9400</d:Freight>
+              <d:ShipName>Alfred's Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(10835)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(10835)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(10835)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(10835)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(10835)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(10835)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">10835</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">1</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1998-01-15T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1998-02-12T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1998-01-21T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">3</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">69.5300</d:Freight>
+              <d:ShipName>Alfred's Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(10952)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(10952)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(10952)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(10952)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(10952)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(10952)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">10952</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">1</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1998-03-16T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1998-04-27T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1998-03-24T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">1</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">40.4200</d:Freight>
+              <d:ShipName>Alfred's Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+        <entry>
+          <id>http://services.odata.org/northwind/Northwind.svc/Orders(11011)</id>
+          <title type="text"></title>
+          <updated>2010-11-15T07:14:39Z</updated>
+          <author>
+            <name />
+          </author>
+          <link rel="edit" title="Order" href="Orders(11011)" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Customer" type="application/atom+xml;type=entry" title="Customer" href="Orders(11011)/Customer" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Employee" type="application/atom+xml;type=entry" title="Employee" href="Orders(11011)/Employee" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Order_Details" type="application/atom+xml;type=feed" title="Order_Details" href="Orders(11011)/Order_Details" />
+          <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Shipper" type="application/atom+xml;type=entry" title="Shipper" href="Orders(11011)/Shipper" />
+          <category term="NorthwindModel.Order" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+          <content type="application/xml">
+            <m:properties>
+              <d:OrderID m:type="Edm.Int32">11011</d:OrderID>
+              <d:CustomerID>ALFKI</d:CustomerID>
+              <d:EmployeeID m:type="Edm.Int32">3</d:EmployeeID>
+              <d:OrderDate m:type="Edm.DateTime">1998-04-09T00:00:00</d:OrderDate>
+              <d:RequiredDate m:type="Edm.DateTime">1998-05-07T00:00:00</d:RequiredDate>
+              <d:ShippedDate m:type="Edm.DateTime">1998-04-13T00:00:00</d:ShippedDate>
+              <d:ShipVia m:type="Edm.Int32">1</d:ShipVia>
+              <d:Freight m:type="Edm.Decimal">1.2100</d:Freight>
+              <d:ShipName>Alfred's Futterkiste</d:ShipName>
+              <d:ShipAddress>Obere Str. 57</d:ShipAddress>
+              <d:ShipCity>Berlin</d:ShipCity>
+              <d:ShipRegion m:null="true" />
+              <d:ShipPostalCode>12209</d:ShipPostalCode>
+              <d:ShipCountry>Germany</d:ShipCountry>
+            </m:properties>
+          </content>
+        </entry>
+      </feed>
+    </m:inline>
+  </link>
+  <link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/CustomerDemographics" type="application/atom+xml;type=feed" title="CustomerDemographics" href="Customers('ALFKI')/CustomerDemographics" />
+  <category term="NorthwindModel.Customer" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+  <content type="application/xml">
+    <m:properties>
+      <d:CustomerID>ALFKI</d:CustomerID>
+      <d:CompanyName>Alfreds Futterkiste</d:CompanyName>
+      <d:ContactName>Maria Anders</d:ContactName>
+      <d:ContactTitle>Sales Representative</d:ContactTitle>
+      <d:Address>Obere Str. 57</d:Address>
+      <d:City>Berlin</d:City>
+      <d:Region m:null="true" />
+      <d:PostalCode>12209</d:PostalCode>
+      <d:Country>Germany</d:Country>
+      <d:Phone>030-0074321</d:Phone>
+      <d:Fax>030-0076545</d:Fax>
+    </m:properties>
+  </content>
+</entry>
