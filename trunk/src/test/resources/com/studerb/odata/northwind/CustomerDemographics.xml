@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<feed xml:base="http://services.odata.org/northwind/Northwind.svc/" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">CustomerDemographics</title>
+  <id>http://services.odata.org/Northwind/Northwind.svc/CustomerDemographics</id>
+  <updated>2010-11-15T02:37:37Z</updated>
+  <author>
+    <name />
+  </author>
+  <link rel="self" title="CustomerDemographics" href="CustomerDemographics" />
+</feed>
