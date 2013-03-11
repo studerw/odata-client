@@ -6,6 +6,7 @@ import static com.studerb.odata.edm.EdmUtil.isStartElement;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
@@ -23,19 +24,20 @@ public class Schema {
     private String namespace;
     private String alias;
 
-    private List<Association> associations = Lists.newArrayList();
-    private List<ComplexType> complexTypes = Lists.newArrayList();
-    private List<EntityType> entityTypes = Lists.newArrayList();
-    private List<EntityContainer> entityContainers = Lists.newArrayList();
-    private DataService dataService;
-
-    public Schema() {}
+    private final List<Association> associations = Lists.newArrayList();
+    private final List<ComplexType> complexTypes = Lists.newArrayList();
+    private final List<EntityType> entityTypes = Lists.newArrayList();
+    private final List<EntityContainer> entityContainers = Lists.newArrayList();
+    private final DataService dataService;
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public Schema(DataService dataService) {
         this.dataService = dataService;
     }
 
     public void parse(StartElement startElement, XMLEventReader reader) throws XMLStreamException {
+        this.qName = startElement.getName();
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -44,6 +46,7 @@ public class Schema {
             }
 			else if (isStartElement(event, EdmUtil.ENTITY_TYPES)) {
                 EntityType entityType = new EntityType(this);
+                log.trace(EdmUtil.printStartElement(event.asStartElement()));
                 entityType.parse(event.asStartElement(), reader);
                 this.entityTypes.add(entityType);
             }
@@ -69,6 +72,8 @@ public class Schema {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
 			Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
+            log.trace("Attribute QName: " + att.getName().toString());
             if (att.getName().getLocalPart().equalsIgnoreCase("Namespace")) {
                 this.log.debug("Namespace: " + att.getValue());
                 this.namespace = att.getValue();
@@ -84,56 +89,28 @@ public class Schema {
         return this.associations;
     }
 
-    public void setAssociations(List<Association> associations) {
-        this.associations = associations;
-    }
-
     public List<ComplexType> getComplexTypes() {
         return this.complexTypes;
-    }
-
-    public void setComplexTypes(List<ComplexType> complexTypes) {
-        this.complexTypes = complexTypes;
     }
 
     public List<EntityType> getEntityTypes() {
         return this.entityTypes;
     }
 
-    public void setEntityTypes(List<EntityType> entityTypes) {
-        this.entityTypes = entityTypes;
-    }
-
     public String getNamespace() {
         return this.namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
     }
 
     public String getAlias() {
         return this.alias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
     public List<EntityContainer> getEntityContainers() {
         return this.entityContainers;
     }
 
-    public void setEntityContainers(List<EntityContainer> entityContainers) {
-        this.entityContainers = entityContainers;
-    }
-
     public DataService getDataService() {
         return this.dataService;
-    }
-
-    public void setDataService(DataService dataService) {
-        this.dataService = dataService;
     }
 
     public Association getAssociationByName(String name) {
@@ -146,6 +123,14 @@ public class Schema {
             }
         }
         return null;
+    }
+
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 }
 

@@ -1,7 +1,9 @@
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
@@ -9,10 +11,13 @@ import javax.xml.stream.events.StartElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+import com.studerb.odata.edm.EdmUtil;
+
 public class Property {
     final Logger log = LoggerFactory.getLogger(Property.class);
 
-    private Type parentType;
+    final private Type parentType;
     private String name;
     private Boolean nullable;
     private String defaultValue;
@@ -23,14 +28,17 @@ public class Property {
     private Boolean unicode;
     private String type;
     private String mimeType;
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
-    public Property() {}
 
     public Property(Type parentType) {
         this.parentType = parentType;
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
+        log.trace(EdmUtil.printStartElement(el));
+        this.qName = el.getName();
         setAttributes(el);
     }
 
@@ -38,6 +46,7 @@ public class Property {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             String name = att.getName().getLocalPart();
             if (name.equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
@@ -86,87 +95,60 @@ public class Property {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Boolean getNullable() {
         return this.nullable;
-    }
-
-    public void setNullable(Boolean nullable) {
-        this.nullable = nullable;
     }
 
     public String getDefaultValue() {
         return this.defaultValue;
     }
 
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
 
     public String getMaxLength() {
         return this.maxLength;
-    }
-
-    public void setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
     }
 
     public Boolean getFixedLength() {
         return this.fixedLength;
     }
 
-    public void setFixedLength(Boolean fixedLength) {
-        this.fixedLength = fixedLength;
-    }
 
     public String getPrecision() {
         return this.precision;
     }
 
-    public void setPrecision(String precision) {
-        this.precision = precision;
-    }
 
     public String getScale() {
         return this.scale;
     }
 
-    public void setScale(String scale) {
-        this.scale = scale;
-    }
 
     public Boolean getUnicode() {
         return this.unicode;
     }
 
-    public void setUnicode(Boolean unicode) {
-        this.unicode = unicode;
-    }
 
     public String getType() {
         return this.type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Type getParentType() {
         return this.parentType;
     }
 
-    public void setParentType(Type parentType) {
-        this.parentType = parentType;
-    }
 
     public String getMimeType() {
         return this.mimeType;
     }
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
+    public QName getqName() {
+        return qName;
     }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
 }

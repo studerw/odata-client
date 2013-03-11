@@ -8,8 +8,6 @@ import java.io.InputStream;
 
 import javax.xml.namespace.QName;
 
-import junit.framework.Assert;
-
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Element;
@@ -18,6 +16,7 @@ import org.apache.abdera.model.Feed;
 import org.apache.abdera.parser.Parser;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,6 +39,7 @@ public class AbderaTest {
         Assert.assertNotNull(input);
         Document<Entry> entryDoc = parser.parse(new ByteArrayInputStream(bytes));
         Entry entry = entryDoc.getRoot();
+        log.debug(entry.toString());
 
     }
 

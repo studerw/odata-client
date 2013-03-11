@@ -1,7 +1,9 @@
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
@@ -9,19 +11,22 @@ import javax.xml.stream.events.StartElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 public class AssociationSetEnd {
     final Logger log = LoggerFactory.getLogger(AssociationSetEnd.class);
-    private AssociationSet associationSet;
+    private final AssociationSet associationSet;
     private String role;
     private String entitySet;
-
-    public AssociationSetEnd() {}
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public AssociationSetEnd(AssociationSet associationSet) {
         this.associationSet = associationSet;
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
+        this.qName = el.getName();
         setAttributes(el);
     }
 
@@ -29,6 +34,7 @@ public class AssociationSetEnd {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             String x = att.getName().getLocalPart();
             if (x.equalsIgnoreCase("EntitySet")) {
                 this.log.debug("Entity Set: " + att.getValue());
@@ -45,24 +51,20 @@ public class AssociationSetEnd {
         return this.associationSet;
     }
 
-    public void setAssociationSet(AssociationSet associationSet) {
-        this.associationSet = associationSet;
-    }
-
     public String getRole() {
         return this.role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getEntitySet() {
         return this.entitySet;
     }
 
-    public void setEntitySet(String entitySet) {
-        this.entitySet = entitySet;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

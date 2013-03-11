@@ -1,7 +1,9 @@
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
@@ -9,19 +11,22 @@ import javax.xml.stream.events.StartElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 public class EntitySet {
     final Logger log = LoggerFactory.getLogger(EntitySet.class);
-    private EntityContainer entityContainer;
+    private final EntityContainer entityContainer;
     private String entityType;
     private String name;
-
-    public EntitySet() {}
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public EntitySet(EntityContainer entityContainer) {
         this.entityContainer = entityContainer;
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
+        this.qName = el.getName();
         setAttributes(el);
     }
 
@@ -29,6 +34,7 @@ public class EntitySet {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
                 this.name = att.getValue();
@@ -43,24 +49,18 @@ public class EntitySet {
     public EntityContainer getEntityContainer() {
         return this.entityContainer;
     }
-
-    public void setEntityContainer(EntityContainer entityContainer) {
-        this.entityContainer = entityContainer;
-    }
-
     public String getEntityType() {
         return this.entityType;
-    }
-
-    public void setEntityType(String entityType) {
-        this.entityType = entityType;
     }
 
     public String getName() {
         return this.name;
     }
+    public QName getqName() {
+        return qName;
+    }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 }

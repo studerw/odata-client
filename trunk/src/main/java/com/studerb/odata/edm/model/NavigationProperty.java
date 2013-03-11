@@ -1,7 +1,9 @@
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
@@ -9,22 +11,25 @@ import javax.xml.stream.events.StartElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 public class NavigationProperty {
     private final Logger log = LoggerFactory.getLogger(NavigationProperty.class);
 
-    private EntityType entityType;
+    private final EntityType entityType;
     private String name;
     private String relationship;
     private String toRole;
     private String fromRole;
-
-    public NavigationProperty() {}
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public NavigationProperty(EntityType entityType) {
         this.entityType = entityType;
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
+        this.qName = el.getName();
         setAttributes(el);
     }
 
@@ -32,6 +37,7 @@ public class NavigationProperty {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             String x = att.getName().getLocalPart();
             if (x.equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
@@ -56,39 +62,28 @@ public class NavigationProperty {
         return this.entityType;
     }
 
-    public void setEntityType(EntityType entityType) {
-        this.entityType = entityType;
-    }
 
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getRelationship() {
         return this.relationship;
     }
 
-    public void setRelationship(String relationship) {
-        this.relationship = relationship;
-    }
-
     public String getToRole() {
         return this.toRole;
-    }
-
-    public void setToRole(String toRole) {
-        this.toRole = toRole;
     }
 
     public String getFromRole() {
         return this.fromRole;
     }
 
-    public void setFromRole(String fromRole) {
-        this.fromRole = fromRole;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 }
