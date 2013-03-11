@@ -1,7 +1,9 @@
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
+import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
@@ -9,21 +11,24 @@ import javax.xml.stream.events.StartElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
+
 public class AssociationEnd {
     final Logger log = LoggerFactory.getLogger(AssociationEnd.class);
 
-    private Association association;
+    private final Association association;
     private String type;
     private String role;
     private String multiplicity;
-
-    public AssociationEnd() {}
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public AssociationEnd(Association association) {
         this.association = association;
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
+        this.qName = el.getName();
         setAttributes(el);
     }
 
@@ -31,6 +36,7 @@ public class AssociationEnd {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             String x = att.getName().getLocalPart();
             if (x.equalsIgnoreCase("Type")) {
                 this.log.debug("Type: " + att.getValue());
@@ -51,32 +57,24 @@ public class AssociationEnd {
         return this.association;
     }
 
-    public void setAssociation(Association association) {
-        this.association = association;
-    }
-
     public String getType() {
         return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getRole() {
         return this.role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getMultiplicity() {
         return this.multiplicity;
     }
 
-    public void setMultiplicity(String multiplicity) {
-        this.multiplicity = multiplicity;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

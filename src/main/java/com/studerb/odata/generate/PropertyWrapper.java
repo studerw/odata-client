@@ -8,14 +8,14 @@ import com.studerb.odata.edm.model.Property;
 
 public class PropertyWrapper {
 
-    private Property property;
+    private final Property property;
 
     public PropertyWrapper(Property property) {
         this.property = property;
     }
 
     public String getJavaClassType() {
-        String result = "Object";
+        String result = null;
         if (this.property.getType().endsWith("Binary")) {
             result = "byte[]";
         }
@@ -57,6 +57,9 @@ public class PropertyWrapper {
         }
         else if (this.property.getType().endsWith("String")) {
             result = "String";
+        }
+        else {
+            result = "Object";
         }
 
         return result;

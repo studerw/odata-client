@@ -6,6 +6,7 @@ import static com.studerb.odata.edm.EdmUtil.isStartElement;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
@@ -22,16 +23,17 @@ public class AssociationSet {
     final Logger log = LoggerFactory.getLogger(AssociationSet.class);
     private String name;
     private String association;
-    private EntityContainer entityContainer;
-    private List<AssociationSetEnd> ends = Lists.newArrayList();
-
-    public AssociationSet() {}
+    private final EntityContainer entityContainer;
+    private final List<AssociationSetEnd> ends = Lists.newArrayList();
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public AssociationSet(EntityContainer entityContainer) {
         this.entityContainer = entityContainer;
     }
 
     public void parse(StartElement el, XMLEventReader reader) throws XMLStreamException {
+        this.qName = el.getName();
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -51,6 +53,7 @@ public class AssociationSet {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
                 this.name = att.getValue();
@@ -66,32 +69,24 @@ public class AssociationSet {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAssociation() {
         return this.association;
-    }
-
-    public void setAssociation(String association) {
-        this.association = association;
     }
 
     public EntityContainer getEntityContainer() {
         return this.entityContainer;
     }
 
-    public void setEntityContainer(EntityContainer entityContainer) {
-        this.entityContainer = entityContainer;
-    }
-
     public List<AssociationSetEnd> getEnds() {
         return this.ends;
     }
 
-    public void setEnds(List<AssociationSetEnd> ends) {
-        this.ends = ends;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

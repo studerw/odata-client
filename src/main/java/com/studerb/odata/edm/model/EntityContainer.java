@@ -6,6 +6,7 @@ import static com.studerb.odata.edm.EdmUtil.isStartElement;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
@@ -25,6 +26,8 @@ public class EntityContainer {
     private String _extends;
     private List<EntitySet> entitySets = Lists.newArrayList();
     private List<AssociationSet> associationSets = Lists.newArrayList();
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public EntityContainer() {}
 
@@ -33,6 +36,7 @@ public class EntityContainer {
     }
 
     public void parse(StartElement el, XMLEventReader reader) throws XMLStreamException {
+        this.qName = el.getName();
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -57,6 +61,7 @@ public class EntityContainer {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
                 this.name = att.getValue();
@@ -106,5 +111,13 @@ public class EntityContainer {
 
     public void setAssociationSets(List<AssociationSet> associationSets) {
         this.associationSets = associationSets;
+    }
+
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 }

@@ -6,6 +6,7 @@ import static com.studerb.odata.edm.EdmUtil.isStartElement;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
@@ -21,17 +22,19 @@ import com.studerb.odata.edm.EdmUtil;
 public class Association {
     final Logger log = LoggerFactory.getLogger(Association.class);
 
-    private Schema schema;
+    private final Schema schema;
     private String name;
-    private List<AssociationEnd> ends = Lists.newArrayList();
+    private QName qName;
 
-    public Association() {}
+    private final List<Attribute> attributes = Lists.newArrayList();
+    private final List<AssociationEnd> ends = Lists.newArrayList();
 
     public Association(Schema schema) {
         this.schema = schema;
     }
 
     public void parse(StartElement el, XMLEventReader reader) throws XMLStreamException {
+        this.qName = el.getName();
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -50,6 +53,7 @@ public class Association {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("name: " + att.getValue());
                 this.name = att.getValue();
@@ -61,24 +65,20 @@ public class Association {
         return this.schema;
     }
 
-    public void setSchema(Schema schema) {
-        this.schema = schema;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<AssociationEnd> getEnds() {
         return this.ends;
     }
 
-    public void setEnds(List<AssociationEnd> ends) {
-        this.ends = ends;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

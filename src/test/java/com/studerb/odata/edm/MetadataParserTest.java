@@ -68,6 +68,20 @@ public class MetadataParserTest {
         parser.parseXml(r.getInputStream());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void checkEmptyMetadataFiles() throws Exception {
+        Resource r = this.appContext.getResource("classpath:com/studerb/odata/Empty.xml");
+        MetadataParser parser = new MetadataParser();
+        parser.parseXml(r.getInputStream());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkBlankMetadataFiles() throws Exception {
+        Resource r = this.appContext.getResource("classpath:com/studerb/odata/Blank.xml");
+        MetadataParser parser = new MetadataParser();
+        parser.parseXml(r.getInputStream());
+    }
+
     @Test
     public void getAllSections() throws Exception {
         Resource r = this.appContext.getResource("classpath:com/studerb/odata/northwind/northwind_metadata.xml");
@@ -162,7 +176,7 @@ public class MetadataParserTest {
     }
 
     @Test
-    public void V3Check() throws Exception {
+    public void V3ParseTest() throws Exception {
         Resource r = this.appContext.getResource("classpath:com/studerb/odata/v3/odata_v3_example_metadata.xml");
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(r.getInputStream());
@@ -185,6 +199,7 @@ public class MetadataParserTest {
 		EntityType product = eTypes.get(0);
 		assertEquals(product.getName(), "Product");
 		assertEquals(product.getKeys().get(0), "ID");
+        assertNull(product.getBaseType());
 		List<String> props = Lists.transform(product.getProperties(), new Function<Property, String>() {
 			@Override
 			public String apply(Property input) {
@@ -196,6 +211,12 @@ public class MetadataParserTest {
 		assertEquals(prodId.getName(), "ID");
 		assertEquals(prodId.getType(), "Edm.Int32");
 		assertFalse(prodId.getNullable());
+
+        // check basetype
+        EntityType featuredProduct = eTypes.get(1);
+        assertEquals(featuredProduct.getName(), "FeaturedProduct");
+        log.debug("Base type of featured product: " + featuredProduct.getBaseType());
+        assertEquals(featuredProduct.getBaseType(), "ODataDemo.Product");
 
 		List<ComplexType> complexTypes = odataDemo.getComplexTypes();
 		assertTrue(complexTypes.size() == 1);

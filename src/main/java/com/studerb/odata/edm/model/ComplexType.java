@@ -6,6 +6,7 @@ import static com.studerb.odata.edm.EdmUtil.isStartElement;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
@@ -20,16 +21,16 @@ import com.studerb.odata.edm.EdmUtil;
 
 public class ComplexType extends Type {
     final Logger log = LoggerFactory.getLogger(ComplexType.class);
-
-    private List<ComplexType> complexTypes = Lists.newArrayList();
-
-    public ComplexType() {}
+    private final List<ComplexType> complexTypes = Lists.newArrayList();
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public ComplexType(Schema schema) {
         this.schema = schema;
     }
 
     public void parse(StartElement startElement, XMLEventReader reader) throws XMLStreamException {
+        this.qName = startElement.getName();
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -53,6 +54,7 @@ public class ComplexType extends Type {
 		Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
                 this.name = att.getValue();
@@ -64,8 +66,12 @@ public class ComplexType extends Type {
         return this.complexTypes;
     }
 
-    public void setComplexTypes(List<ComplexType> complexTypes) {
-        this.complexTypes = complexTypes;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

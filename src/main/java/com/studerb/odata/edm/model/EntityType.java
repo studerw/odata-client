@@ -22,11 +22,12 @@ import com.studerb.odata.edm.EdmUtil;
 public class EntityType extends Type {
     final Logger log = LoggerFactory.getLogger(EntityType.class);
 
-    private List<NavigationProperty> navigationProperties = Lists.newArrayList();
+    private final List<NavigationProperty> navigationProperties = Lists.newArrayList();
     private List<String> keys = Lists.newArrayList();
+    // TODO figure out basetype
     public String baseType;
-
-    public EntityType() {}
+    private QName qName;
+    private final List<Attribute> attributes = Lists.newArrayList();
 
     public EntityType(Schema schema) {
         this.schema = schema;
@@ -41,6 +42,8 @@ public class EntityType extends Type {
     }
 
     public void parse(StartElement startElement, XMLEventReader reader) throws XMLStreamException {
+        log.trace(EdmUtil.printStartElement(startElement));
+        this.qName = startElement.getName();
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
@@ -69,9 +72,15 @@ public class EntityType extends Type {
         Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
+            this.attributes.add(att);
+            this.attributes.add(att);
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
                 this.log.debug("Name: " + att.getValue());
                 this.name = att.getValue();
+            }
+            else if (att.getName().getLocalPart().equalsIgnoreCase("BaseType")) {
+                this.log.debug("BaseType: " + att.getValue());
+                this.baseType = att.getValue();
             }
         }
     }
@@ -100,16 +109,16 @@ public class EntityType extends Type {
         return this.navigationProperties;
     }
 
-    public void setNavigationProperties(List<NavigationProperty> navigationProperties) {
-        this.navigationProperties = navigationProperties;
-    }
-
     public String getBaseType() {
         return baseType;
     }
 
-    public void setBaseType(String baseType) {
-        this.baseType = baseType;
+    public QName getqName() {
+        return qName;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

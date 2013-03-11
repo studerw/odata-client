@@ -3,7 +3,10 @@ package com.studerb.odata.edm;
 import java.util.Arrays;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class EdmUtil {
     public final static QName EDMX = new QName("http://schemas.microsoft.com/ado/2007/06/edmx", "Edmx");
@@ -76,6 +79,12 @@ public class EdmUtil {
 
     public static boolean isEndElement(XMLEvent event, QName... names) {
         return event.isEndElement() && Arrays.asList(names).contains(event.asEndElement().getName());
+    }
+
+    public static String printStartElement(StartElement el) {
+        return new ToStringBuilder(el).append("Name", el.getName().toString()).append("NamespaceContext", el.getNamespaceContext()).append("SchemaType", el.getSchemaType())
+                        .toString();
+
     }
 
 }
