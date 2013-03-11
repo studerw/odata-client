@@ -1,4 +1,4 @@
-package com.studerb.odata.generate.basic;
+package com.studerb.odata.generate;
 
 import java.beans.Introspector;
 
