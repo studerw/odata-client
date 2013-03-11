@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import com.studerb.odata.edm.model.DataService;
 import com.studerb.odata.edm.model.Metadata;
 import com.studerb.odata.generate.Generator;
-import com.studerb.odata.generate.basic.DefaultGenerator;
 
 /**
  * MetadataParser is used by the Generator to create a {@link Metadata Metadata}
@@ -30,7 +29,7 @@ import com.studerb.odata.generate.basic.DefaultGenerator;
  * 
  * @author Bill Studer
  * @see Generator
- * @see DefaultGenerator
+ * @see Generator
  * 
  */
 public class MetadataParser {

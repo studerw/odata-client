@@ -24,6 +24,7 @@ public class EntityType extends Type {
 
     private List<NavigationProperty> navigationProperties = Lists.newArrayList();
     private List<String> keys = Lists.newArrayList();
+    public String baseType;
 
     public EntityType() {}
 
@@ -43,20 +44,20 @@ public class EntityType extends Type {
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (isEndElement(event, EdmUtil.ENTITY_TYPES)) {
+            if (isEndElement(event, EdmUtil.ENTITY_TYPES)) {
                 return;
             }
-			else if (isStartElement(event, EdmUtil.KEYS)) {
+            else if (isStartElement(event, EdmUtil.KEYS)) {
                 String key = parseKey(event.asStartElement(), reader);
                 this.log.debug("Adding key: " + key);
                 this.keys.add(key);
             }
-			else if (isStartElement(event, EdmUtil.PROPERTIES)) {
+            else if (isStartElement(event, EdmUtil.PROPERTIES)) {
                 Property property = new Property(this);
                 property.parse(event.asStartElement(), reader);
                 this.properties.add(property);
             }
-			else if (isStartElement(event, EdmUtil.NAV_PROPS)) {
+            else if (isStartElement(event, EdmUtil.NAV_PROPS)) {
                 NavigationProperty navProp = new NavigationProperty(this);
                 navProp.parse(event.asStartElement(), reader);
                 this.navigationProperties.add(navProp);
@@ -65,7 +66,7 @@ public class EntityType extends Type {
     }
 
     private void setAttributes(StartElement startElement) {
-		Iterator<?> iter = startElement.getAttributes();
+        Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
             if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
@@ -79,10 +80,10 @@ public class EntityType extends Type {
         String val = null;
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (isEndElement(event, EdmUtil.KEYS)) {
+            if (isEndElement(event, EdmUtil.KEYS)) {
                 break;
             }
-			else if (isStartElement(event, EdmUtil.PROP_REFS)) {
+            else if (isStartElement(event, EdmUtil.PROP_REFS)) {
                 Attribute att = event.asStartElement().getAttributeByName(new QName("Name"));
                 if (att == null) {
                     throw new RuntimeException("Cannot find Key name for property");
@@ -102,4 +103,13 @@ public class EntityType extends Type {
     public void setNavigationProperties(List<NavigationProperty> navigationProperties) {
         this.navigationProperties = navigationProperties;
     }
+
+    public String getBaseType() {
+        return baseType;
+    }
+
+    public void setBaseType(String baseType) {
+        this.baseType = baseType;
+    }
+
 }

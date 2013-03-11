@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import com.studerb.odata.edm.MetadataParser;
 import com.studerb.odata.edm.model.Metadata;
-import com.studerb.odata.generate.basic.DefaultGenerator;
 
 /**
  * <p>
@@ -27,10 +26,11 @@ import com.studerb.odata.generate.basic.DefaultGenerator;
  */
 public class GenerateUtil {
 
-    final static Logger log =  LoggerFactory.getLogger(GenerateUtil.class);
+    final static Logger log = LoggerFactory.getLogger(GenerateUtil.class);
+
     public static void main(String[] args) throws Exception {
         System.err.println("****************************************BLAH***************************");
-        if (args.length != 2){
+        if (args.length != 2) {
             throw new IllegalArgumentException("args <top directory where source is to be created> <file location of metadata file>");
         }
         String sourceDirStr = args[0];
@@ -39,13 +39,12 @@ public class GenerateUtil {
         File sourceDir = new File(sourceDirStr);
         File metadataFile = new File(metadataFileStr);
 
-
-        if (!metadataFile.exists()){
+        if (!metadataFile.exists()) {
             throw new IllegalArgumentException("Metadata file does not exist: " + metadataFileStr);
         }
         log.info("Using metafile: " + metadataFile.getName());
 
-        if (sourceDir.exists()){
+        if (sourceDir.exists()) {
             log.info("deleting source directory: " + sourceDir.getName());
             FileUtils.deleteDirectory(sourceDir);
         }
@@ -54,7 +53,6 @@ public class GenerateUtil {
 
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(new FileInputStream(metadataFile));
-        new DefaultGenerator().setOutputDir(sourceDir).generate(metadata);
-
+        new Generator(sourceDir).generate(metadata);
     }
 }

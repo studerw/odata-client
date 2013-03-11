@@ -1,5 +1,4 @@
-package com.studerb.odata.generate.basic;
-
+package com.studerb.odata.generate;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,14 +19,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.studerb.odata.edm.MetadataParser;
 import com.studerb.odata.edm.model.Metadata;
-import com.studerb.odata.generate.basic.DefaultGenerator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration( { "classpath:spring/test-context.xml" })
+@ContextConfiguration({ "classpath:spring/test-context.xml" })
 public class GeneratorTest {
 
-    @Inject
-    ApplicationContext appContext;
+    @Inject ApplicationContext appContext;
 
     final static File CREATE_DIR = new File(SystemUtils.getJavaIoTmpDir(), "_ODATA_GENERATE_");
     final static File EXISTING = new File(SystemUtils.getJavaIoTmpDir(), "_ODATA_EXISTING_");
@@ -59,7 +56,7 @@ public class GeneratorTest {
         Resource r = this.appContext.getResource("classpath:com/studerb/odata/northwind/northwind_metadata.xml");
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(r.getInputStream());
-        new DefaultGenerator().setOutputDir(CREATE_DIR).generate(metadata);
+        new Generator(CREATE_DIR).generate(metadata);
     }
 
     @Test
@@ -67,15 +64,15 @@ public class GeneratorTest {
         Resource r = this.appContext.getResource("classpath:com/studerb/odata/netflix/netflix_metadata.xml");
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(r.getInputStream());
-        new DefaultGenerator().setOutputDir(CREATE_DIR).generate(metadata);
+        new Generator(CREATE_DIR).generate(metadata);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void noOutputDir() throws Exception {
-        Resource r = this.appContext.getResource("classpath:com/studerb/odata/netflix/netflix_metadata.xml");
+    @Test
+    public void generateV3() throws Exception {
+        Resource r = this.appContext.getResource("classpath:com/studerb/odata/v3/odata_v3_example_metadata.xml");
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(r.getInputStream());
-        new DefaultGenerator().generate(metadata);
+        new Generator(CREATE_DIR).generate(metadata);
     }
 
     @Test(expected = RuntimeException.class)
@@ -85,8 +82,8 @@ public class GeneratorTest {
         MetadataParser parser = new MetadataParser();
         Metadata metadata = parser.parseXml(r.getInputStream());
         File existing = new File(EXISTING, "NetflixCatalog.Model");
-		existing.mkdirs();
-        new DefaultGenerator().setOutputDir(EXISTING).generate(metadata);
+        existing.mkdirs();
+        new Generator(EXISTING).generate(metadata);
     }
 
 }
