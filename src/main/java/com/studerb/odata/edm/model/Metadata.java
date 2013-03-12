@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
@@ -32,13 +37,13 @@ public class Metadata {
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (EdmUtil.isEndElement(event, EdmUtil.EDMX)) {
+            if (EdmUtil.isEndElement(event, EdmUtil.EDMX)) {
                 return;
             }
-			else if (EdmUtil.isStartElement(event, EdmUtil.DATA_SERVICES)) {
-			    DataService dataService = new DataService();
-			    dataService.parse(event.asStartElement(), reader);
-			    this.getDataServices().add(dataService);
+            else if (EdmUtil.isStartElement(event, EdmUtil.DATA_SERVICES)) {
+                DataService dataService = new DataService();
+                dataService.parse(event.asStartElement(), reader);
+                this.getDataServices().add(dataService);
             }
         }
 
