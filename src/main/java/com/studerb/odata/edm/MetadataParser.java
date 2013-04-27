@@ -1,7 +1,5 @@
 package com.studerb.odata.edm;
 
-import static com.studerb.odata.edm.EdmUtil.EDMX;
-import static com.studerb.odata.edm.EdmUtil.isStartElement;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -15,20 +13,19 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.studerb.odata.atom.Namespaces;
 import com.studerb.odata.edm.model.Metadata;
 import com.studerb.odata.generate.Generator;
 
 /**
- * MetadataParser is used by the Generator to create a {@link Metadata Metadata}
- * object from an XML OData Metadata file.
- *
- * Typically, one only uses this object directly when generating source code
- * using a {@link Generator} implementation.
- *
- * @author Bill Studer
+ * MetadataParser is used by the Generator to create a {@link Metadata Metadata} object from an XML OData Metadata file.
+ * 
+ * Typically, one only uses this object directly when generating source code using a {@link Generator}.
+ * 
+ * @author William Studer
  * @see Generator
  * @see Generator
- *
+ * 
  */
 public class MetadataParser {
     final Logger log = LoggerFactory.getLogger(MetadataParser.class);
@@ -61,7 +58,7 @@ public class MetadataParser {
                 log.debug("Beginning parsing Metadata doc");
                 confirmEdmx();
             }
-            else if (isStartElement(event, EdmUtil.EDMX)) {
+            else if (Namespaces.isStartElement(event, Namespaces.EDMX)) {
                 this.metadata = new Metadata();
                 metadata.parse(event.asStartElement(), this.reader);
             }
@@ -80,9 +77,9 @@ public class MetadataParser {
                 }
                 if (event.isStartElement()) {
                     StartElement root = event.asStartElement();
-                    log.trace(EdmUtil.printStartElement(root));
+                    log.trace(Namespaces.printStartElement(root));
                     this.log.debug("Expecting EDMX root element and received: " + root.getName().toString());
-                    if (!root.getName().equals(EDMX)) {
+                    if (!root.getName().equals(Namespaces.EDMX)) {
                         log.error(String.format("Root of Xml Doc = %s - Only edmx files accepted", root.getName().toString()));
                         throw new IllegalArgumentException(String.format("Root of Xml Doc = %s - Only edmx files accepted", root.getName().toString()));
                     }

@@ -33,7 +33,7 @@ public class ODataEntryParser<T> {
             propParser.parse(this.target, entry);
             parseLinks();
             this.log.info(String.format("Parsing entry with ID: %s to type: %s", URLDecoder.decode(entry.getId().toASCIIString(), Charsets.UTF_8.name()), this.type
-                    .getName()));
+                            .getName()));
             return this.target;
         }
         catch (Exception e) {

@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.generate;
 
 import java.beans.Introspector;
@@ -15,14 +20,14 @@ import com.studerb.odata.edm.model.Type;
 
 public class TypeWrapper {
     final Logger log = LoggerFactory.getLogger(TypeWrapper.class);
-    private Type type;
-    private List<PropertyWrapper> propWrappers = Lists.newArrayList();
-    private List<NavigationPropertyWrapper> navPropWrappers = Lists.newArrayList();
+    private final Type type;
+    private final List<PropertyWrapper> propWrappers = Lists.newArrayList();
+    private final List<NavigationPropertyWrapper> navPropWrappers = Lists.newArrayList();
 
     final static List<String> reservedWords = Lists.newArrayList("assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue",
-            "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "goto", "if", "implements", "import",
-            "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
-            "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while");
+                    "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "goto", "if", "implements", "import",
+                    "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
+                    "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while");
 
     public TypeWrapper(Type type) {
         this.type = type;

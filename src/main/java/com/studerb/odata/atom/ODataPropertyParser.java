@@ -3,10 +3,10 @@ package com.studerb.odata.atom;
 import org.apache.abdera.model.Entry;
 
 /**
- * Simple interface used for marshalling an objects <em>primitive</em>
- * properties to a Java Pojo object based on the returned OData Atom Entry.
+ * Simple interface used for marshalling an objects <em>primitive</em> properties to a Java Pojo object based on the
+ * returned OData Atom Entry.
  * 
- * @author Bill Studer
+ * @author William Studer
  * 
  * @param <T>
  */

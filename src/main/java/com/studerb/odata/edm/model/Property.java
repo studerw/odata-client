@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.edm.model;
 
 import java.util.Iterator;
@@ -12,22 +17,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.studerb.odata.edm.EdmUtil;
+import com.studerb.odata.atom.Namespaces;
 
 public class Property {
     final Logger log = LoggerFactory.getLogger(Property.class);
 
     final private Type parentType;
     private String name;
-    private Boolean nullable;
+    private Boolean nullable = true;
     private String defaultValue;
     private String maxLength;
     private Boolean fixedLength;
-    private String precision;
-    private String scale;
+    private Integer precision;
+    private Integer scale = 0;
     private Boolean unicode;
     private String type;
     private String mimeType;
+    private String collation;
+    private String SRID;
+    private String concurrencyMode = "None";
     private QName qName;
     private final List<Attribute> attributes = Lists.newArrayList();
 
@@ -37,13 +45,13 @@ public class Property {
     }
 
     public void parse(StartElement el, XMLEventReader reader) {
-        log.trace(EdmUtil.printStartElement(el));
+        log.trace(Namespaces.printStartElement(el));
         this.qName = el.getName();
         setAttributes(el);
     }
 
     private void setAttributes(StartElement startElement) {
-		Iterator<?> iter = startElement.getAttributes();
+        Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
             this.attributes.add(att);
@@ -74,15 +82,39 @@ public class Property {
             }
             else if (name.equalsIgnoreCase("Scale")) {
                 this.log.debug("Scale: " + att.getValue());
-                this.scale = att.getValue();
+                try {
+                    this.scale = Integer.parseInt(att.getValue());
+                }
+                catch (NumberFormatException e) {
+                    throw new RuntimeException("Error converting to integer attribute [scale]: " + att.getValue());
+                }
+
             }
             else if (name.equalsIgnoreCase("Precision")) {
                 this.log.debug("Precision: " + att.getValue());
-                this.precision = att.getValue();
+                try {
+                    this.precision = Integer.parseInt(att.getValue());
+                }
+                catch (NumberFormatException e) {
+                    throw new RuntimeException("Error converting to integer attribute [precision]: " + att.getValue());
+                }
+
             }
             else if (name.equalsIgnoreCase("MimeType")) {
                 this.log.debug("Mime Type: " + att.getValue());
                 this.mimeType = att.getValue();
+            }
+            else if (name.equalsIgnoreCase("Collation")) {
+                this.log.debug("Collation: " + att.getValue());
+                this.collation = att.getValue();
+            }
+            else if (name.equalsIgnoreCase("SRID")) {
+                this.log.debug("SRID: " + att.getValue());
+                this.SRID = att.getValue();
+            }
+            else if (name.equalsIgnoreCase("ConcurrencyMode")) {
+                this.log.debug("ConcurrencyMode: " + att.getValue());
+                this.concurrencyMode = att.getValue();
             }
 
             else if (name.startsWith("FC_")) {
@@ -114,12 +146,12 @@ public class Property {
     }
 
 
-    public String getPrecision() {
+    public Integer Precision() {
         return this.precision;
     }
 
 
-    public String getScale() {
+    public Integer getScale() {
         return this.scale;
     }
 
@@ -149,6 +181,18 @@ public class Property {
 
     public List<Attribute> getAttributes() {
         return attributes;
+    }
+
+    public String getCollation() {
+        return collation;
+    }
+
+    public String getSRID() {
+        return SRID;
+    }
+
+    public String getConcurrencyMode() {
+        return concurrencyMode;
     }
 
 }

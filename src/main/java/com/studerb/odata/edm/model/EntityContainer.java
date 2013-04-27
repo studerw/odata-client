@@ -1,8 +1,5 @@
 package com.studerb.odata.edm.model;
 
-import static com.studerb.odata.edm.EdmUtil.isEndElement;
-import static com.studerb.odata.edm.EdmUtil.isStartElement;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.studerb.odata.edm.EdmUtil;
+import com.studerb.odata.atom.Namespaces;
 
 public class EntityContainer {
     final Logger log = LoggerFactory.getLogger(EntityContainer.class);
@@ -40,15 +37,15 @@ public class EntityContainer {
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (isEndElement(event, EdmUtil.ENTITY_CONTAINERS)) {
+            if (Namespaces.isEndElement(event, Namespaces.ENTITY_CONTAINERS)) {
                 return;
             }
-			else if (isStartElement(event, EdmUtil.ENTITY_SETS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ENTITY_SETS)) {
                 EntitySet entitySet = new EntitySet(this);
                 entitySet.parse(event.asStartElement(), reader);
                 this.entitySets.add(entitySet);
             }
-			else if (isStartElement(event, EdmUtil.ASSOCIATION_SETS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ASSOCIATION_SETS)) {
                 AssociationSet associationSet = new AssociationSet(this);
                 associationSet.parse(event.asStartElement(), reader);
                 this.associationSets.add(associationSet);
@@ -58,7 +55,7 @@ public class EntityContainer {
     }
 
     private void setAttributes(StartElement startElement) {
-		Iterator<?> iter = startElement.getAttributes();
+        Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
             this.attributes.add(att);

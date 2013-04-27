@@ -8,14 +8,11 @@ import org.apache.abdera.model.Link;
 
 /**
  * <p>
- * the OData model uses Atom links within an Atom entry to describe the logical
- * relationships between an objects embedded entities. For example, if a
- * 'Customer' has an associated list of Orders, this relationship will be
- * described using an Atom Link. When OData expansions are used, the embedded
- * relationships are essentially loaded on demand and able to be marshalled to
- * full Java Pojos and attached to the parent object's object graph. This is
- * similar to Hibernate or other ORM frameworks' use of on-demand versus
- * <em>lazy loading</em> of related entities.
+ * the OData model uses Atom links within an Atom entry to describe the logical relationships between an objects
+ * embedded entities. For example, if a 'Customer' has an associated list of Orders, this relationship will be described
+ * using an Atom Link. When OData expansions are used, the embedded relationships are essentially loaded on demand and
+ * able to be marshalled to full Java Pojos and attached to the parent object's object graph. This is similar to
+ * Hibernate or other ORM frameworks' use of on-demand versus <em>lazy loading</em> of related entities.
  * </p>
  * 
  * @param <T>

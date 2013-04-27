@@ -27,23 +27,19 @@ import com.studerb.odata.naming.PropertyNameStrategy;
 
 /**
  * <p>
- * Thread safe class used to read from an OData Service. Only one of these needs
- * to be created per app and/or OData Service. (in other words, don't create a
- * new ODataClient per query).
+ * Thread safe class used to read from an OData Service. Only one of these needs to be created per app and/or OData
+ * Service. (in other words, don't create a new ODataClient per query).
  * </p>
  * <p>
- * One is encouraged to use the ODataQuery object for queries that return feeds
- * / entries in the ODATA Atom format. However, to do ad-hoc queries returning
- * basic XML and or text, one should just use the clients underlying Apache
+ * One is encouraged to use the ODataQuery object for queries that return feeds / entries in the ODATA Atom format.
+ * However, to do ad-hoc queries returning basic XML and or text, one should just use the clients underlying Apache
  * HttpClient (4.x) Client via the {@link #getHttpClient() getHttpClient()}
  * </p>
- *
- * @author Bill Studer
- *
+ * 
+ * @author William Studer
+ * 
  * @see <a href="http://hc.apache.org/">Apache HttpComponents 4 Project</a>
- * @see <a
- *      href="http://hc.apache.org/httpcomponents-client-ga/tutorial/html/">Http
- *      Client Tutorial</a>
+ * @see <a href="http://hc.apache.org/httpcomponents-client-ga/tutorial/html/">Http Client Tutorial</a>
  * @see <a href="http://www.odata.org/">OData (Open Data Protocol)</a>
  */
 public class ODataClient {
@@ -58,11 +54,11 @@ public class ODataClient {
     private PropertyNameStrategy propertyNameStrategy;
 
     /**
+     * 
      * @param service
-     *            the root or base of the OData web service with or without the
-     *            final slash (e.g.
+     *            the root or base of the OData web service with or without the final slash <code>(e.g.
      *            http://services.odata.org/Northwind/Northwind.svc OR
-     *            http://services.odata.org/Northwind/Northwind.svc/ )
+     *            http://services.odata.org/Northwind/Northwind.svc/ )</code>
      * @param propertyNameStrategy
      *            Strategy used to map properties between OData and Java
      */
@@ -275,6 +271,7 @@ public class ODataClient {
             throw new RuntimeException("Must use schema of type http OR https");
         }
 
+        // TODO fix this
         ThreadSafeClientConnManager clientConnMgr = new ThreadSafeClientConnManager(schemeRegistry);
         clientConnMgr.setDefaultMaxPerRoute(this.MAX_CONNECTIONS);
         DefaultHttpClient tempClient = new DefaultHttpClient(clientConnMgr, params);

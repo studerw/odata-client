@@ -1,8 +1,5 @@
 package com.studerb.odata.edm.model;
 
-import static com.studerb.odata.edm.EdmUtil.isEndElement;
-import static com.studerb.odata.edm.EdmUtil.isStartElement;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,21 +10,19 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.studerb.odata.edm.EdmUtil;
+import com.studerb.odata.atom.Namespaces;
 
 public class EntityType extends Type {
     final Logger log = LoggerFactory.getLogger(EntityType.class);
 
     private final List<NavigationProperty> navigationProperties = Lists.newArrayList();
     private List<String> keys = Lists.newArrayList();
-    // TODO figure out basetype
-    public String baseType;
-    private QName qName;
-    private final List<Attribute> attributes = Lists.newArrayList();
+    protected Boolean openType;
 
     public EntityType(Schema schema) {
         this.schema = schema;
@@ -41,26 +36,27 @@ public class EntityType extends Type {
         this.keys = keys;
     }
 
+    @Override
     public void parse(StartElement startElement, XMLEventReader reader) throws XMLStreamException {
-        log.trace(EdmUtil.printStartElement(startElement));
+        log.trace(Namespaces.printStartElement(startElement));
         this.qName = startElement.getName();
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-            if (isEndElement(event, EdmUtil.ENTITY_TYPES)) {
+            if (Namespaces.isEndElement(event, Namespaces.ENTITY_TYPES)) {
                 return;
             }
-            else if (isStartElement(event, EdmUtil.KEYS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.KEYS)) {
                 String key = parseKey(event.asStartElement(), reader);
                 this.log.debug("Adding key: " + key);
                 this.keys.add(key);
             }
-            else if (isStartElement(event, EdmUtil.PROPERTIES)) {
+            else if (Namespaces.isStartElement(event, Namespaces.PROPERTIES)) {
                 Property property = new Property(this);
                 property.parse(event.asStartElement(), reader);
                 this.properties.add(property);
             }
-            else if (isStartElement(event, EdmUtil.NAV_PROPS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.NAV_PROPS)) {
                 NavigationProperty navProp = new NavigationProperty(this);
                 navProp.parse(event.asStartElement(), reader);
                 this.navigationProperties.add(navProp);
@@ -68,19 +64,15 @@ public class EntityType extends Type {
         }
     }
 
-    private void setAttributes(StartElement startElement) {
+    @Override
+    protected void setAttributes(StartElement startElement) {
+        super.setAttributes(startElement);
         Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
-            this.attributes.add(att);
-            this.attributes.add(att);
-            if (att.getName().getLocalPart().equalsIgnoreCase("Name")) {
-                this.log.debug("Name: " + att.getValue());
-                this.name = att.getValue();
-            }
-            else if (att.getName().getLocalPart().equalsIgnoreCase("BaseType")) {
-                this.log.debug("BaseType: " + att.getValue());
-                this.baseType = att.getValue();
+            if (att.getName().getLocalPart().equalsIgnoreCase("openType")) {
+                this.log.debug("OpenType: " + att.getValue());
+                this.openType = BooleanUtils.toBooleanObject(att.getValue());
             }
         }
     }
@@ -89,10 +81,10 @@ public class EntityType extends Type {
         String val = null;
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-            if (isEndElement(event, EdmUtil.KEYS)) {
+            if (Namespaces.isEndElement(event, Namespaces.KEYS)) {
                 break;
             }
-            else if (isStartElement(event, EdmUtil.PROP_REFS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.PROP_REFS)) {
                 Attribute att = event.asStartElement().getAttributeByName(new QName("Name"));
                 if (att == null) {
                     throw new RuntimeException("Cannot find Key name for property");
@@ -107,18 +99,6 @@ public class EntityType extends Type {
 
     public List<NavigationProperty> getNavigationProperties() {
         return this.navigationProperties;
-    }
-
-    public String getBaseType() {
-        return baseType;
-    }
-
-    public QName getqName() {
-        return qName;
-    }
-
-    public List<Attribute> getAttributes() {
-        return attributes;
     }
 
 }

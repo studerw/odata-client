@@ -48,7 +48,7 @@ import com.studerb.odata.atom.ODataFeedParser;
  * which expects a Java bean compliant format based on the exact names used by
  * the underlying service and its metadata description doc. </p>
  *
- * @author Bill Studer
+ * @author William Studer
  *
  * @param <T>
  *            The type of object that will marhalled and returned via the

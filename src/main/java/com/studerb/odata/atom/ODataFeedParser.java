@@ -24,7 +24,7 @@ public class ODataFeedParser<T> {
     private Integer inlineCount;
     private Link skipTokenLink;
     private String skipToken;
-    private PropertyNameStrategy propertyNameStrategy;
+    private final PropertyNameStrategy propertyNameStrategy;
     boolean parsedInlineCount = false;
     boolean parsedSkipToken = false;
 

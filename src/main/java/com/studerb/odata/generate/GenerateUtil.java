@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.generate;
 
 import java.io.File;
@@ -20,9 +25,9 @@ import com.studerb.odata.edm.model.Metadata;
  * <p>
  * For example:
  * <code>java -jar GenerateUtil "c:/home/generate_source_dir" "c:/home/northwind_metadata.xml"</code>
- * 
- * @author Bill Studer
- * 
+ *
+ * @author William Studer
+ *
  */
 public class GenerateUtil {
 

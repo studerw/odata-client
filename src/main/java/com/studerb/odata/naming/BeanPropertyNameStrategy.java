@@ -9,7 +9,7 @@ import com.studerb.odata.atom.ODataPropertyParser;
  * Property Naming Strategy that uses traditional JavaBean style naming
  * conversion to and from the OData model.
  *
- * @author Bill Studer
+ * @author William Studer
  */
 public class BeanPropertyNameStrategy implements PropertyNameStrategy {
 

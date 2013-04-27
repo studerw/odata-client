@@ -32,7 +32,7 @@ import com.studerb.odata.naming.PropertyNameStrategy;
  * attemtp to create a new Pojo (or Collection) and attach them to passed parent
  * object.
  * </p>
- * @author Bill Studer
+ * @author William Studer
  *
  * @param <T>
  */
@@ -224,6 +224,7 @@ public abstract class AbstractAbderaLinkParser<T> implements ODataLinkParser<T> 
      *         versus a single object. In other words, does this relationship
      *         describe a one-to-one or one-to-many type relationship.
      */
+    @Override
     public boolean isCollection() {
         return (this.list || this.set);
     }
