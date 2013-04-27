@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Bill Studer
+ * @author William Studer
  * 
  */
 public class RestletPropertyParser<T> extends AbstractPropertyParser<T> {
@@ -20,12 +20,10 @@ public class RestletPropertyParser<T> extends AbstractPropertyParser<T> {
     }
 
     /**
-     * Code used by Restlet needed for classes named using the Restlet OData
-     * Generator class
+     * Code used by Restlet needed for classes named using the Restlet OData Generator class
      * 
      * @param name
-     * @return the normalized name of the property using Restlets normalize
-     *         method
+     * @return the normalized name of the property using Restlets normalize method
      */
     public String normalize(String name) {
         String result = null;
@@ -84,17 +82,17 @@ public class RestletPropertyParser<T> extends AbstractPropertyParser<T> {
     }
 
     /**
-     * Seems to be a bug when going from setters / getters back to props when
-     * the original property is something like 'vTasks'. For example, to a
-     * getter, we'd get getVTasks(). When going the other way (which BeanUtils
-     * PropertyBeanUtils does to figure out the correct method per prop), you
-     * get the prop VTask.
+     * Seems to be a bug when going from setters / getters back to props when the original property is something like
+     * 'vTasks'. For example, to a getter, we'd get getVTasks(). When going the other way (which BeanUtils
+     * PropertyBeanUtils does to figure out the correct method per prop), you get the prop VTask.
      * 
      * getVTasks -> VTasks getvTasks->vTasks
      * 
      * 
      * @param property
-     * @return
+     *            String that may need to corrected if it contains two upper case letters followed by standard lower
+     *            case.
+     * @return String with corrected case
      */
     private String checkLowerUpper(String property) {
         String replaced = property;

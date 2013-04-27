@@ -1,7 +1,9 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.edm.model;
-
-import static com.studerb.odata.edm.EdmUtil.isEndElement;
-import static com.studerb.odata.edm.EdmUtil.isStartElement;
 
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.studerb.odata.edm.EdmUtil;
+import com.studerb.odata.atom.Namespaces;
 
 public class Schema {
     final Logger log = LoggerFactory.getLogger(Schema.class);
@@ -41,26 +43,27 @@ public class Schema {
         setAttributes(startElement);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (isEndElement(event, EdmUtil.SCHEMAS)) {
+            if (Namespaces.isEndElement(event, Namespaces.SCHEMAS)) {
+                addComplex();
                 return;
             }
-			else if (isStartElement(event, EdmUtil.ENTITY_TYPES)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ENTITY_TYPES)) {
                 EntityType entityType = new EntityType(this);
-                log.trace(EdmUtil.printStartElement(event.asStartElement()));
+                log.trace(Namespaces.printStartElement(event.asStartElement()));
                 entityType.parse(event.asStartElement(), reader);
                 this.entityTypes.add(entityType);
             }
-			else if (isStartElement(event, EdmUtil.ASSOCIATIONS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ASSOCIATIONS)) {
                 Association association = new Association(this);
                 association.parse(event.asStartElement(), reader);
                 this.associations.add(association);
             }
-			else if (isStartElement(event, EdmUtil.COMPLEX_TYPES)) {
+            else if (Namespaces.isStartElement(event, Namespaces.COMPLEX_TYPES)) {
                 ComplexType complexType = new ComplexType(this);
                 complexType.parse(event.asStartElement(), reader);
                 this.complexTypes.add(complexType);
             }
-			else if (isStartElement(event, EdmUtil.ENTITY_CONTAINERS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ENTITY_CONTAINERS)) {
                 EntityContainer entityContainer = new EntityContainer(this);
                 entityContainer.parse(event.asStartElement(), reader);
                 this.entityContainers.add(entityContainer);
@@ -68,10 +71,10 @@ public class Schema {
         }
     }
 
-    private void setAttributes(StartElement startElement) {
-		Iterator<?> iter = startElement.getAttributes();
+    protected void setAttributes(StartElement startElement) {
+        Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
-			Attribute att = (Attribute) iter.next();
+            Attribute att = (Attribute) iter.next();
             this.attributes.add(att);
             log.trace("Attribute QName: " + att.getName().toString());
             if (att.getName().getLocalPart().equalsIgnoreCase("Namespace")) {
@@ -83,6 +86,14 @@ public class Schema {
                 this.alias = att.getValue();
             }
         }
+    }
+
+    /**
+     * Used when the whole schema has been parsed, we can go back and add the complex types to both {@link EntityType
+     * EntityTypes} and {@link ComplexType ComplexTypes}.
+     */
+    protected void addComplex() {
+
     }
 
     public List<Association> getAssociations() {
@@ -125,7 +136,7 @@ public class Schema {
         return null;
     }
 
-    public QName getqName() {
+    public QName getQName() {
         return qName;
     }
 

@@ -1,13 +1,19 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.generate;
-
 import java.beans.Introspector;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.studerb.odata.edm.model.Property;
 
 public class PropertyWrapper {
-
+    final Logger log = LoggerFactory.getLogger(PropertyWrapper.class);
     private final Property property;
 
     public PropertyWrapper(Property property) {
@@ -15,24 +21,30 @@ public class PropertyWrapper {
     }
 
     public String getJavaClassType() {
-        String result = null;
+        String result = "Object";
         if (this.property.getType().endsWith("Binary")) {
             result = "byte[]";
         }
         else if (this.property.getType().endsWith("Boolean")) {
             result = "Boolean";
         }
+        else if (this.property.getType().endsWith("Byte")) {
+            result = "UnsignedByte";
+        }
         else if (this.property.getType().endsWith("DateTime")) {
-            result = "Date";
+            result = "org.joda.time.LocalDateTime";
+            // result = "java.lang.calendar";
         }
         else if (this.property.getType().endsWith("DateTimeOffset")) {
-            result = "Date";
+            result = "org.joda.time.DateTime";
+            // result = "java.lang.calendar";
         }
         else if (this.property.getType().endsWith("Time")) {
-            result = "Long";
+            result = "org.joda.time.LocalTime";
+
         }
         else if (this.property.getType().endsWith("Decimal")) {
-            result = "Double";
+            result = "BigDecimal";
         }
         else if (this.property.getType().endsWith("Single")) {
             result = "Float";
@@ -43,6 +55,9 @@ public class PropertyWrapper {
         else if (this.property.getType().endsWith("Guid")) {
             result = "String";
         }
+        else if (this.property.getType().endsWith("SByte")) {
+            result = "Byte";
+        }
         else if (this.property.getType().endsWith("Int16")) {
             result = "Short";
         }
@@ -52,14 +67,11 @@ public class PropertyWrapper {
         else if (this.property.getType().endsWith("Int64")) {
             result = "Long";
         }
-        else if (this.property.getType().endsWith("Byte")) {
-            result = "Byte";
-        }
         else if (this.property.getType().endsWith("String")) {
             result = "String";
         }
         else {
-            result = "Object";
+            log.warn("Can not find appropriate type for: " + this.property.getType() + ". Setting to default Object");
         }
 
         return result;

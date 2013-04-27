@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.generate;
 
 import java.beans.Introspector;
@@ -14,8 +19,8 @@ import com.studerb.odata.edm.model.Schema;
 public class NavigationPropertyWrapper {
     final Logger log = LoggerFactory.getLogger(NavigationPropertyWrapper.class);
 
-    private NavigationProperty navProperty;
-    private Association association;
+    private final NavigationProperty navProperty;
+    private final Association association;
 
     public NavigationPropertyWrapper(NavigationProperty navProperty) {
         this.navProperty = navProperty;

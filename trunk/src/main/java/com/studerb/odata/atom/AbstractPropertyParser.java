@@ -1,7 +1,6 @@
 package com.studerb.odata.atom;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.abdera.model.Element;
@@ -11,16 +10,29 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.BeanUtilsBean2;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.beanutils.converters.AbstractConverter;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.FastDateFormat;
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.studerb.odata.atom.convert.BinaryArrayByteConverter;
+import com.studerb.odata.atom.convert.BinaryArrayPrimitiveByteConverter;
+import com.studerb.odata.atom.convert.CalendarConverter;
+import com.studerb.odata.atom.convert.DateConverter;
+import com.studerb.odata.atom.convert.JodaDateTimeConverter;
+import com.studerb.odata.atom.convert.JodaLocalTimeConverter;
+import com.studerb.odata.atom.convert.UnsignedByteConverter;
+import com.studerb.odata.edm.UnsignedByte;
+
+/**
+ * @author William Studer
+ * 
+ * @param <T>
+ * 
+ * @see <a href="http://www.odata.org/documentation/overview#AbstractTypeSystem">OData Abstract Type System for
+ *      Conversion info</a>
+ */
 public abstract class AbstractPropertyParser<T> implements ODataPropertyParser<T> {
     final Logger log = LoggerFactory.getLogger(AbstractPropertyParser.class);
     protected String entryId;
@@ -29,10 +41,13 @@ public abstract class AbstractPropertyParser<T> implements ODataPropertyParser<T
 
     static {
         BeanUtilsBean.setInstance(new BeanUtilsBean2());
-        ConvertUtils.register(new JodaLocalDateTimeConverter(), LocalDateTime.class);
-        ConvertUtils.register(new ODataDefaultDateConverter(), Date.class);
-        ConvertUtils.register(new ODataDefaultBinaryByteConverter(), Byte[].class);
-        ConvertUtils.register(new ODataBinaryArrayByteConverter(), byte[].class);
+        ConvertUtils.register(new JodaDateTimeConverter(), DateTime.class);
+        ConvertUtils.register(new CalendarConverter(), Calendar.class);
+        ConvertUtils.register(new DateConverter(), Date.class);
+        ConvertUtils.register(new JodaLocalTimeConverter(), LocalTime.class);
+        ConvertUtils.register(new BinaryArrayByteConverter(), Byte[].class);
+        ConvertUtils.register(new BinaryArrayPrimitiveByteConverter(), byte[].class);
+        ConvertUtils.register(new UnsignedByteConverter(), UnsignedByte.class);
     }
 
     public abstract String getPropName(String name);
@@ -98,98 +113,6 @@ public abstract class AbstractPropertyParser<T> implements ODataPropertyParser<T
             val = propEl.getText();
         }
         return val;
-    }
-
-    /*
-     * protected EdmType getEdmType(Element propEl) { String type =
-     * StringUtils.defaultIfEmpty(propEl.getAttributeValue(Namespaces.M_TYPE),
-     * EdmType.STRING.toString()); EdmType edmType = EdmType.get(type); return
-     * edmType; }
-     */
-
-    static class JodaLocalDateTimeConverter extends AbstractConverter {
-        private final Logger log = LoggerFactory.getLogger(JodaLocalDateTimeConverter.class);
-
-        @Override
-        protected Object convertToType(Class type, Object value) throws Throwable {
-            LocalDateTime d = null;
-            if (value instanceof String && !StringUtils.isBlank((String) value)) {
-                d = new LocalDateTime(value);
-            }
-            return d;
-        }
-
-        @Override
-        protected Class getDefaultType() {
-            return LocalDateTime.class;
-        }
-    }
-
-    static class ODataDefaultDateConverter extends AbstractConverter {
-        private final Logger log = LoggerFactory.getLogger(ODataDefaultDateConverter.class);
-        final static FastDateFormat isoDateTimeFormat = DateFormatUtils.ISO_DATETIME_FORMAT;
-
-        @Override
-        protected Object convertToType(Class type, Object value) throws Throwable {
-            Date d = null;
-            if (value instanceof String && !StringUtils.isBlank((String) value)) {
-                SimpleDateFormat f = new SimpleDateFormat(isoDateTimeFormat.getPattern());
-                try {
-                    d = f.parse((String) value);
-                }
-                catch (ParseException e) {
-                    this.log.error(e.getMessage(), e);
-                }
-            }
-            return d;
-
-        }
-
-        @Override
-        protected Class getDefaultType() {
-            return java.util.Date.class;
-        }
-    }
-
-    static class ODataDefaultBinaryByteConverter extends AbstractConverter {
-        private final Logger log = LoggerFactory.getLogger(ODataDefaultBinaryByteConverter.class);
-
-        @Override
-        protected Object convertToType(Class type, Object value) throws Throwable {
-            Byte[] bytes = null;
-            if (value instanceof String && !StringUtils.isBlank((String) value)) {
-                this.log.info("Base 64 decoding string");
-                String s = (String) value;
-                byte[] decoded = Base64.decodeBase64(s);
-                bytes = ArrayUtils.toObject(decoded);
-            }
-            return bytes;
-        }
-
-        @Override
-        protected Class getDefaultType() {
-            return Byte[].class;
-        }
-    }
-
-    static class ODataBinaryArrayByteConverter extends AbstractConverter {
-        private final Logger log = LoggerFactory.getLogger(ODataDefaultBinaryByteConverter.class);
-
-        @Override
-        protected Object convertToType(Class type, Object value) throws Throwable {
-            byte[] bytes = null;
-            if (value instanceof String && !StringUtils.isBlank((String) value)) {
-                this.log.info("Base 64 decoding string");
-                String s = (String) value;
-                bytes = Base64.decodeBase64(s);
-            }
-            return bytes;
-        }
-
-        @Override
-        protected Class getDefaultType() {
-            return byte[].class;
-        }
     }
 
 }

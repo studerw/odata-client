@@ -1,3 +1,8 @@
+/*
+ * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
+ *
+ * Copyright (c) 2013 William Studer
+ */
 package com.studerb.odata.generate;
 
 import java.io.File;
@@ -41,7 +46,7 @@ import freemarker.template.Template;
  * }
  * </pre>
  * 
- * @author Bill Studer
+ * @author William Studer
  * @see Metadata
  * @see MetadataParser
  */
@@ -52,11 +57,10 @@ public class Generator {
     Configuration cfg;
 
     /**
-     * Set the directory that will be used for placing the generated souce code.
-     * <b>Note that if the subdirectories named after each scheme in the
-     * metadata already exist, the generate function will throw an exception</b>
+     * Set the directory that will be used for placing the generated souce code. <b>Note that if the subdirectories
+     * named after each scheme in the metadata already exist, the generate function will throw an exception</b>
      * 
-     * @param file
+     * @param outputDir
      *            directory to place generated source
      */
     public Generator(File outputDir) {
@@ -66,15 +70,12 @@ public class Generator {
 
 
     /**
-     * This method will generate the output source Java files based on the
-     * passed in Metadata
+     * This method will generate the output source Java files based on the passed in Metadata
      * 
      * @param metadata
-     *            OData metadata object created by passing in a OData schema XML
-     *            file
+     *            OData metadata object created by passing in a OData schema XML file
      * @throws Exception
-     *             if there is any parsing error or the output directory has not
-     *             been set
+     *             if there is any parsing error or the output directory has not been set
      */
     public void generate(Metadata metadata) throws Exception {
         if (this.outputDir == null) {
@@ -102,7 +103,7 @@ public class Generator {
 
     protected void generateSchema(Schema schema) throws Exception {
         if (schema.getEntityTypes().isEmpty() && schema.getComplexTypes().isEmpty()
-                && schema.getAssociations().isEmpty()) {
+                        && schema.getAssociations().isEmpty()) {
             this.log.warn("Ignoring java generation of empty schema named: " + schema.getNamespace());
             return;
         }
@@ -135,7 +136,7 @@ public class Generator {
     protected void createCfg() {
         try {
             File entityTmpl = new File(Generator.class.getClassLoader().getResource(
-                    "com/studerb/odata/generate/entity.ftl").getFile());
+                            "com/studerb/odata/generate/entity.ftl").getFile());
             File configDir = entityTmpl.getParentFile();
             if (!configDir.exists()) {
                 throw new RuntimeException("Freemarker Template Dir: " + configDir.getPath() + " doesn't exist");

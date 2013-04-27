@@ -1,8 +1,5 @@
 package com.studerb.odata.edm.model;
 
-import static com.studerb.odata.edm.EdmUtil.isEndElement;
-import static com.studerb.odata.edm.EdmUtil.isStartElement;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
-import com.studerb.odata.edm.EdmUtil;
+import com.studerb.odata.atom.Namespaces;
 
 public class AssociationSet {
     final Logger log = LoggerFactory.getLogger(AssociationSet.class);
@@ -37,10 +34,10 @@ public class AssociationSet {
         setAttributes(el);
         while (reader.hasNext()) {
             XMLEvent event = reader.nextEvent();
-			if (isEndElement(event, EdmUtil.ASSOCIATION_SETS)) {
+            if (Namespaces.isEndElement(event, Namespaces.ASSOCIATION_SETS)) {
                 return;
             }
-			else if (isStartElement(event, EdmUtil.ENDS)) {
+            else if (Namespaces.isStartElement(event, Namespaces.ENDS)) {
                 AssociationSetEnd associationSetEnd = new AssociationSetEnd(this);
                 associationSetEnd.parse(event.asStartElement(), reader);
                 this.ends.add(associationSetEnd);
@@ -50,7 +47,7 @@ public class AssociationSet {
     }
 
     private void setAttributes(StartElement startElement) {
-		Iterator<?> iter = startElement.getAttributes();
+        Iterator<?> iter = startElement.getAttributes();
         while (iter.hasNext()) {
             Attribute att = (Attribute) iter.next();
             this.attributes.add(att);
