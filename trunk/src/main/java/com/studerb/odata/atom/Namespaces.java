@@ -8,6 +8,11 @@ import javax.xml.stream.events.XMLEvent;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+/**
+ * @see <a href=http://www.odata.org/documentation/odata-v2-documentation/overview/#6_Primitive_Data_Types>Version 2</a>
+ * @author Bill Studer
+ * 
+ */
 public class Namespaces {
     public static final String NS_APP = "http://www.w3.org/2007/app";
     public static final String NS_XML = "http://www.w3.org/XML/1998/namespace";
@@ -156,6 +161,26 @@ public class Namespaces {
         EDM2008_ASSOCIATIONSET, EDM2009_ASSOCIATIONSET, EDM2009_2_ASSOCIATIONSET };
 
 
+    // Example 1: null
+    public final static String NULL = "null";
+    // Example 1: X'23AB' Example 2: binary'23ABFF'
+    public final static String EDM_BINARY = "Edm.Binary";
+    // Example 1: true Example 2: false
+    public final static String EDM_BOOLEAN = "Edm.Boolean";
+    // Example 1: FF
+    public final static String EDM_BYTE = "Edm.Byte";
+    public final static String EDM_DATE_TIME = "Edm.DateTime";
+    public final static String EDM_DECIMAL = "Edm.Decimal";
+    public final static String EDM_DOUBLE = "Edm.Double";
+    public final static String EDM_SINGLE = "Edm.Single";
+    public final static String EDM_GUID = "Edm.Guid";
+    public final static String EDM_INT_16 = "Edm.Int16";
+    public final static String EDM_INT_32 = "Edm.Int32";
+    public final static String EDM_INT_64 = "Edm.Int64";
+    public final static String EDM_S_BYTE = "Edm.SByte";
+    public final static String EDM_STRING = "Edm.String";
+    public final static String EDM_TIME = "Edm.Time";
+    public final static String EDM_DATE_TIME_OFFSET = "Edm.DateTimeOffset";
 
     public static final QName XML_BASE = new QName(NS_XML, "base");
 

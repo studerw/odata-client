@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * converts a string of base64 encoded bytes to an array of object wrapped Bytes (instead of primitive type
  * <code>byte</code>.
- * 
+ *
  * @author William Studer
- * 
+ *
  */
 
 public class BinaryArrayByteConverter extends AbstractConverter {

@@ -1,9 +1,5 @@
-/*
- * $Id: StringConversionTest.java 5 2013-03-12 06:24:16Z stbill79 $
- *
- * Copyright (c) 2013 William Studer
- */
 package com.studerb.odata.generate;
+
 import java.beans.Introspector;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,54 +17,57 @@ public class PropertyWrapper {
     }
 
     public String getJavaClassType() {
+
+        final String PREFIX = "(Edm\\.)?";
         String result = "Object";
-        if (this.property.getType().endsWith("Binary")) {
-            result = "byte[]";
+        if (this.property.getType().matches(PREFIX + "Binary")) {
+            result = "Byte[]";
         }
-        else if (this.property.getType().endsWith("Boolean")) {
+        else if (this.property.getType().matches(PREFIX + "Boolean")) {
             result = "Boolean";
         }
-        else if (this.property.getType().endsWith("Byte")) {
-            result = "UnsignedByte";
+        else if (this.property.getType().matches(PREFIX + "Byte")) {
+            result = "com.studerb.odata.edm.UnsignedByte";
         }
-        else if (this.property.getType().endsWith("DateTime")) {
+        else if (this.property.getType().matches(PREFIX + "DateTime")) {
             result = "org.joda.time.LocalDateTime";
             // result = "java.lang.calendar";
         }
-        else if (this.property.getType().endsWith("DateTimeOffset")) {
+        else if (this.property.getType().matches(PREFIX + "DateTimeOffset")) {
             result = "org.joda.time.DateTime";
             // result = "java.lang.calendar";
         }
-        else if (this.property.getType().endsWith("Time")) {
-            result = "org.joda.time.LocalTime";
-
-        }
-        else if (this.property.getType().endsWith("Decimal")) {
+        else if (this.property.getType().matches(PREFIX + "Decimal")) {
             result = "BigDecimal";
         }
-        else if (this.property.getType().endsWith("Single")) {
+        else if (this.property.getType().matches(PREFIX + "Single")) {
             result = "Float";
         }
         else if (this.property.getType().endsWith("Double")) {
             result = "Double";
         }
-        else if (this.property.getType().endsWith("Guid")) {
+        else if (this.property.getType().matches(PREFIX + "Guid")) {
             result = "String";
         }
-        else if (this.property.getType().endsWith("SByte")) {
-            result = "Byte";
-        }
-        else if (this.property.getType().endsWith("Int16")) {
+        else if (this.property.getType().matches(PREFIX + "Int16")) {
             result = "Short";
         }
-        else if (this.property.getType().endsWith("Int32")) {
+        else if (this.property.getType().matches(PREFIX + "Int32")) {
             result = "Integer";
         }
-        else if (this.property.getType().endsWith("Int64")) {
+        else if (this.property.getType().matches(PREFIX + "Int64")) {
             result = "Long";
         }
-        else if (this.property.getType().endsWith("String")) {
+        else if (this.property.getType().matches(PREFIX + "SByte")) {
+            result = "Byte";
+        }
+
+        else if (this.property.getType().matches(PREFIX + "String")) {
             result = "String";
+        }
+        else if (this.property.getType().matches(PREFIX + "Time")) {
+            result = "org.joda.time.LocalTime";
+
         }
         else {
             log.warn("Can not find appropriate type for: " + this.property.getType() + ". Setting to default Object");
