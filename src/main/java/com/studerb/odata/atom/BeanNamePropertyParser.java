@@ -5,7 +5,7 @@ import java.beans.Introspector;
 /**
  * <p>
  * The is an implementation of the {@link com.studerb.odata.atom.ODataPropertyParser ODataPropertyParser} interface that
- * parses and Abdera Atom Entry object and sets and converts the appropriate properties on a created Java pojo
+ * parses an Abdera Atom Entry object and sets and converts the appropriate properties on a created Java pojo
  * </p>
  * 
  * <p>
@@ -23,11 +23,11 @@ import java.beans.Introspector;
  * </p>
  * <p>
  * Conversion Rules: Basically the default conversions used by Apache Commons BeanUtils are performed with several
- * 'additions' listed below.
+ * additions listed below.
  * <ol>
  * <li>EDM DateTime - can be converted to either a {@link java.util.Date Java Date} or a
  * {@link org.joda.time.LocalDateTime Joda LocalDateTime}</li>
- * <li>EDM Binary - will by default be Base64 decoded if the underlying Pojo type is an array of Java Bytes (i.e. Byte[]
+ * <li>EDM Binary - will by default be Base64 decoded if the underlying POJO type is an array of Java Bytes (i.e. Byte[]
  * and <strong>not</strong> primitive byte[])</li>
  * </ol>
  * 
