@@ -13,6 +13,7 @@ public class JodaLocalTimeConverter extends AbstractConverter {
     protected Object convertToType(Class type, Object value) throws Throwable {
         LocalTime t = null;
         if (value instanceof String && !StringUtils.isBlank((String) value)) {
+            this.log.debug("Converting " + value + " to Joda Local Time Object");
             t = new LocalTime(value);
         }
         else {

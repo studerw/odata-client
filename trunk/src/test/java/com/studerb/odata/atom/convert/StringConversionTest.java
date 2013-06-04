@@ -62,6 +62,8 @@ public class StringConversionTest {
     @Test
     public void stringToDateTime() throws Throwable {
         String stringDate = "2010-03-01T16:13:20-05:00";
+        String stringDate2 = "2000-12-12T12:00";
+
         JodaDateTimeConverter converter = new JodaDateTimeConverter();
         DateTime dt = (DateTime) converter.convertToType(DateTime.class, stringDate);
         assertTrue(dt.getClass() == DateTime.class);
@@ -102,10 +104,6 @@ public class StringConversionTest {
 
     }
 
-    @Test
-    public void defaultBeanUtilsConvertTest() {
-        fail("not implemented");
-    }
 
     @Test
     public void stringToSqlTimeTest() {
