@@ -29,6 +29,7 @@ public class CalendarConverter extends AbstractConverter {
     protected Object convertToType(Class type, Object value) throws Throwable {
         Calendar cal = null;
         if (value instanceof String && !StringUtils.isBlank((String) value)) {
+            this.log.debug("Converting " + value + " to Java Calendar");
             DateTime temp = new DateTime(value, DateTimeZone.UTC);
             cal = temp.toCalendar(null);
         }
