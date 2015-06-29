@@ -1,0 +1,1 @@
+Simple client library for consuming Microsoft OData web services.
